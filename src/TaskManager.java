@@ -18,18 +18,7 @@ public class TaskManager {
         System.out.println("\nYour Tasks:");
 
         for (int i = 0; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
-
-            System.out.println(
-                (i + 1) + ". " +
-                task.name +
-                " | Priority: " +
-                task.priority +
-                " | Due: " +
-                task.dueDate +
-                " | Status: " +
-                task.getStatus()
-            );
+            displayTask(i, tasks.get(i));
         }
     }
 
@@ -58,17 +47,7 @@ public class TaskManager {
             Task task = tasks.get(i);
 
             if (task.name.toLowerCase().contains(keyword.toLowerCase())) {
-                System.out.println(
-                    (i + 1) + ". " +
-                    task.name +
-                    " | Priority: " +
-                    task.priority +
-                    " | Due: " +
-                    task.dueDate +
-                    " | Status: " +
-                    task.getStatus()
-                );
-
+                displayTask(i, task);
                 found = true;
             }
         }
@@ -76,5 +55,56 @@ public class TaskManager {
         if (!found) {
             System.out.println("No matching task found.");
         }
+    }
+
+    public void filterByStatus(String status) {
+        boolean found = false;
+
+        System.out.println("\n" + status + " Tasks:");
+
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+
+            if (task.getStatus().equalsIgnoreCase(status)) {
+                displayTask(i, task);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No " + status.toLowerCase() + " tasks found.");
+        }
+    }
+
+    public void filterByPriority(String priority) {
+        boolean found = false;
+
+        System.out.println("\n" + priority + " Priority Tasks:");
+
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+
+            if (task.priority.equalsIgnoreCase(priority)) {
+                displayTask(i, task);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No " + priority.toLowerCase() + " priority tasks found.");
+        }
+    }
+
+    private void displayTask(int index, Task task) {
+        System.out.println(
+            (index + 1) + ". " +
+            task.name +
+            " | Priority: " +
+            task.priority +
+            " | Due: " +
+            task.dueDate +
+            " | Status: " +
+            task.getStatus()
+        );
     }
 }
