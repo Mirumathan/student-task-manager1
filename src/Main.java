@@ -59,7 +59,9 @@ public class Main {
                     break;
 
                 case 6:
-                    System.out.println("Thank you for using Student Task Manager!");
+                    System.out.println(
+                        "Thank you for using Student Task Manager!"
+                    );
                     sc.close();
                     return;
 
