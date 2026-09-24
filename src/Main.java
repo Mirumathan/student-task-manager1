@@ -93,7 +93,9 @@ public class Main {
                             );
 
                         } else {
-                            System.out.println("Invalid task number!");
+                            System.out.println(
+                                    "Invalid task number!"
+                            );
                         }
                     }
 
@@ -149,11 +151,18 @@ public class Main {
                     int statusChoice = sc.nextInt();
 
                     if (statusChoice == 1) {
+
                         manager.filterByStatus("Pending");
+
                     } else if (statusChoice == 2) {
+
                         manager.filterByStatus("Completed");
+
                     } else {
-                        System.out.println("Invalid choice!");
+
+                        System.out.println(
+                                "Invalid choice!"
+                        );
                     }
 
                     break;
@@ -169,13 +178,22 @@ public class Main {
                     int priorityChoice = sc.nextInt();
 
                     if (priorityChoice == 1) {
+
                         manager.filterByPriority("High");
+
                     } else if (priorityChoice == 2) {
+
                         manager.filterByPriority("Medium");
+
                     } else if (priorityChoice == 3) {
+
                         manager.filterByPriority("Low");
+
                     } else {
-                        System.out.println("Invalid choice!");
+
+                        System.out.println(
+                                "Invalid choice!"
+                        );
                     }
 
                     break;
@@ -196,11 +214,18 @@ public class Main {
                     int sortChoice = sc.nextInt();
 
                     if (sortChoice == 1) {
+
                         manager.sortByPriority();
+
                     } else if (sortChoice == 2) {
+
                         manager.sortByDueDate();
+
                     } else {
-                        System.out.println("Invalid choice!");
+
+                        System.out.println(
+                                "Invalid choice!"
+                        );
                     }
 
                     break;
@@ -216,7 +241,9 @@ public class Main {
 
                 default:
 
-                    System.out.println("Invalid choice!");
+                    System.out.println(
+                            "Invalid choice!"
+                    );
             }
         }
     }

@@ -100,7 +100,6 @@ public class TaskManager {
             Task task = tasks.get(i);
 
             if (task.name.toLowerCase().contains(keyword.toLowerCase())) {
-
                 displayTask(i, task);
                 found = true;
             }
@@ -122,7 +121,6 @@ public class TaskManager {
             Task task = tasks.get(i);
 
             if (task.getStatus().equalsIgnoreCase(status)) {
-
                 displayTask(i, task);
                 found = true;
             }
@@ -146,7 +144,6 @@ public class TaskManager {
             Task task = tasks.get(i);
 
             if (task.priority.equalsIgnoreCase(priority)) {
-
                 displayTask(i, task);
                 found = true;
             }
@@ -154,7 +151,8 @@ public class TaskManager {
 
         if (!found) {
             System.out.println(
-                    "No " + priority.toLowerCase() + " priority tasks found."
+                    "No " + priority.toLowerCase() +
+                    " priority tasks found."
             );
         }
     }
@@ -229,12 +227,14 @@ public class TaskManager {
 
         try {
 
-            tasks.sort(Comparator.comparing(
-                    task -> LocalDate.parse(
-                            task.dueDate,
-                            dateFormatter
+            tasks.sort(
+                    Comparator.comparing(
+                            task -> LocalDate.parse(
+                                    task.dueDate,
+                                    dateFormatter
+                            )
                     )
-            ));
+            );
 
             saveTasks();
 
@@ -310,7 +310,6 @@ public class TaskManager {
                     String name = data[0];
                     String priority = data[1];
                     String dueDate = data[2];
-
                     boolean completed =
                             Boolean.parseBoolean(data[3]);
 
