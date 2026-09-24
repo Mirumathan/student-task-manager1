@@ -17,7 +17,8 @@ public class Main {
             System.out.println("5. Search Task");
             System.out.println("6. Filter by Status");
             System.out.println("7. Filter by Priority");
-            System.out.println("8. Exit");
+            System.out.println("8. Task Statistics");
+            System.out.println("9. Exit");
 
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
@@ -29,10 +30,14 @@ public class Main {
                     System.out.print("Enter task: ");
                     String name = sc.nextLine();
 
-                    System.out.print("Enter priority (High/Medium/Low): ");
+                    System.out.print(
+                        "Enter priority (High/Medium/Low): "
+                    );
                     String priority = sc.nextLine();
 
-                    System.out.print("Enter due date (DD-MM-YYYY): ");
+                    System.out.print(
+                        "Enter due date (DD-MM-YYYY): "
+                    );
                     String dueDate = sc.nextLine();
 
                     manager.addTask(name, priority, dueDate);
@@ -43,14 +48,18 @@ public class Main {
                     break;
 
                 case 3:
-                    System.out.print("Enter task number to complete: ");
+                    System.out.print(
+                        "Enter task number to complete: "
+                    );
                     int completeNumber = sc.nextInt();
 
                     manager.completeTask(completeNumber);
                     break;
 
                 case 4:
-                    System.out.print("Enter task number to delete: ");
+                    System.out.print(
+                        "Enter task number to delete: "
+                    );
                     int deleteNumber = sc.nextInt();
 
                     manager.deleteTask(deleteNumber);
@@ -99,6 +108,10 @@ public class Main {
                     break;
 
                 case 8:
+                    manager.showStatistics();
+                    break;
+
+                case 9:
                     System.out.println(
                         "Thank you for using Student Task Manager!"
                     );
