@@ -12,14 +12,15 @@ public class Main {
             System.out.println("\n===== Student Task Manager =====");
             System.out.println("1. Add Task");
             System.out.println("2. View Tasks");
-            System.out.println("3. Mark Task Completed");
-            System.out.println("4. Delete Task");
-            System.out.println("5. Search Task");
-            System.out.println("6. Filter by Status");
-            System.out.println("7. Filter by Priority");
-            System.out.println("8. Task Statistics");
-            System.out.println("9. Sort Tasks");
-            System.out.println("10. Exit");
+            System.out.println("3. Update Task");
+            System.out.println("4. Mark Task Completed");
+            System.out.println("5. Delete Task");
+            System.out.println("6. Search Task");
+            System.out.println("7. Filter by Status");
+            System.out.println("8. Filter by Priority");
+            System.out.println("9. Task Statistics");
+            System.out.println("10. Sort Tasks");
+            System.out.println("11. Exit");
 
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
@@ -57,6 +58,51 @@ public class Main {
 
                 case 3:
 
+                    manager.viewTasks();
+
+                    if (!manager.tasks.isEmpty()) {
+
+                        System.out.print(
+                                "Enter task number to update: "
+                        );
+
+                        int updateNumber = sc.nextInt();
+                        sc.nextLine();
+
+                        if (updateNumber >= 1 &&
+                                updateNumber <= manager.tasks.size()) {
+
+                            System.out.print("Enter new task: ");
+                            String newName = sc.nextLine();
+
+                            System.out.print(
+                                    "Enter new priority (High/Medium/Low): "
+                            );
+                            String newPriority = sc.nextLine();
+
+                            System.out.print(
+                                    "Enter new due date (DD-MM-YYYY): "
+                            );
+                            String newDueDate = sc.nextLine();
+
+                            manager.updateTask(
+                                    updateNumber,
+                                    newName,
+                                    newPriority,
+                                    newDueDate
+                            );
+
+                        } else {
+                            System.out.println(
+                                    "Invalid task number!"
+                            );
+                        }
+                    }
+
+                    break;
+
+                case 4:
+
                     System.out.print(
                             "Enter task number to complete: "
                     );
@@ -69,7 +115,7 @@ public class Main {
 
                     break;
 
-                case 4:
+                case 5:
 
                     System.out.print(
                             "Enter task number to delete: "
@@ -83,7 +129,7 @@ public class Main {
 
                     break;
 
-                case 5:
+                case 6:
 
                     System.out.print(
                             "Enter task to search: "
@@ -95,14 +141,12 @@ public class Main {
 
                     break;
 
-                case 6:
+                case 7:
 
                     System.out.println("\n1. Pending");
                     System.out.println("2. Completed");
 
-                    System.out.print(
-                            "Choose status: "
-                    );
+                    System.out.print("Choose status: ");
 
                     int statusChoice = sc.nextInt();
 
@@ -123,15 +167,13 @@ public class Main {
 
                     break;
 
-                case 7:
+                case 8:
 
                     System.out.println("\n1. High");
                     System.out.println("2. Medium");
                     System.out.println("3. Low");
 
-                    System.out.print(
-                            "Choose priority: "
-                    );
+                    System.out.print("Choose priority: ");
 
                     int priorityChoice = sc.nextInt();
 
@@ -156,18 +198,19 @@ public class Main {
 
                     break;
 
-                case 8:
+                case 9:
 
                     manager.showStatistics();
                     break;
 
-                case 9:
+                case 10:
 
                     System.out.println("\n===== Sort Tasks =====");
                     System.out.println("1. Sort by Priority");
                     System.out.println("2. Sort by Due Date");
 
                     System.out.print("Choose option: ");
+
                     int sortChoice = sc.nextInt();
 
                     if (sortChoice == 1) {
@@ -187,7 +230,7 @@ public class Main {
 
                     break;
 
-                case 10:
+                case 11:
 
                     System.out.println(
                             "Thank you for using Student Task Manager!"
