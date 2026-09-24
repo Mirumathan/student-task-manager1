@@ -23,7 +23,6 @@ public class TaskManager {
     }
 
     public void addTask(String name, String priority, String dueDate) {
-
         tasks.add(new Task(name, priority, dueDate));
         saveTasks();
 
@@ -31,7 +30,6 @@ public class TaskManager {
     }
 
     public void viewTasks() {
-
         if (tasks.isEmpty()) {
             System.out.println("No tasks available.");
             return;
@@ -44,8 +42,30 @@ public class TaskManager {
         }
     }
 
-    public void completeTask(int taskNumber) {
+    public void updateTask(
+            int taskNumber,
+            String newName,
+            String newPriority,
+            String newDueDate) {
 
+        if (taskNumber >= 1 && taskNumber <= tasks.size()) {
+
+            Task task = tasks.get(taskNumber - 1);
+
+            task.name = newName;
+            task.priority = newPriority;
+            task.dueDate = newDueDate;
+
+            saveTasks();
+
+            System.out.println("Task updated successfully!");
+
+        } else {
+            System.out.println("Invalid task number!");
+        }
+    }
+
+    public void completeTask(int taskNumber) {
         if (taskNumber >= 1 && taskNumber <= tasks.size()) {
 
             tasks.get(taskNumber - 1).markCompleted();
@@ -59,7 +79,6 @@ public class TaskManager {
     }
 
     public void deleteTask(int taskNumber) {
-
         if (taskNumber >= 1 && taskNumber <= tasks.size()) {
 
             Task removed = tasks.remove(taskNumber - 1);
@@ -187,6 +206,8 @@ public class TaskManager {
             }
         });
 
+        saveTasks();
+
         System.out.println("\nTasks sorted by priority:");
         viewTasks();
     }
@@ -214,6 +235,8 @@ public class TaskManager {
                             dateFormatter
                     )
             ));
+
+            saveTasks();
 
             System.out.println("\nTasks sorted by due date:");
             viewTasks();
@@ -287,6 +310,7 @@ public class TaskManager {
                     String name = data[0];
                     String priority = data[1];
                     String dueDate = data[2];
+
                     boolean completed =
                             Boolean.parseBoolean(data[3]);
 
