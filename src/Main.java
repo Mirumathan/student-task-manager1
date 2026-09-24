@@ -22,26 +22,23 @@ public class Main {
             System.out.println("10. Sort Tasks");
             System.out.println("11. Exit");
 
-            System.out.print("Enter your choice: ");
-            int choice = sc.nextInt();
-            sc.nextLine();
+            int choice = readInteger(
+                    sc,
+                    "Enter your choice: "
+            );
 
             switch (choice) {
 
                 case 1:
 
-                    System.out.print("Enter task: ");
-                    String name = sc.nextLine();
-
-                    System.out.print(
-                            "Enter priority (High/Medium/Low): "
+                    String name = readNonEmptyText(
+                            sc,
+                            "Enter task: "
                     );
-                    String priority = sc.nextLine();
 
-                    System.out.print(
-                            "Enter due date (DD-MM-YYYY): "
-                    );
-                    String dueDate = sc.nextLine();
+                    String priority = readPriority(sc);
+
+                    String dueDate = readValidDate(sc);
 
                     manager.addTask(
                             name,
@@ -62,39 +59,31 @@ public class Main {
 
                     if (!manager.tasks.isEmpty()) {
 
-                        System.out.print(
+                        int updateNumber = readInteger(
+                                sc,
                                 "Enter task number to update: "
                         );
-
-                        int updateNumber = sc.nextInt();
-                        sc.nextLine();
 
                         if (updateNumber >= 1 &&
                                 updateNumber <= manager.tasks.size()) {
 
-                            System.out.print("Enter new task: ");
-                            String newName = sc.nextLine();
+                            String newName =
+                                    readNonEmptyText(
+                                            sc,
+                                            "Enter new task: "
+                                    );
 
-                            System.out.print(
-                                    "Enter new priority (High/Medium/Low): "
-                            );
-                            String newPriority = sc.nextLine();
+                            String newPriority =
+                                    readPriority(sc);
 
-                            System.out.print(
-                                    "Enter new due date (DD-MM-YYYY): "
-                            );
-                            String newDueDate = sc.nextLine();
+                            String newDueDate =
+                                    readValidDate(sc);
 
                             manager.updateTask(
                                     updateNumber,
                                     newName,
                                     newPriority,
                                     newDueDate
-                            );
-
-                        } else {
-                            System.out.println(
-                                    "Invalid task number!"
                             );
                         }
                     }
@@ -103,11 +92,10 @@ public class Main {
 
                 case 4:
 
-                    System.out.print(
+                    int completeNumber = readInteger(
+                            sc,
                             "Enter task number to complete: "
                     );
-
-                    int completeNumber = sc.nextInt();
 
                     manager.completeTask(
                             completeNumber
@@ -117,11 +105,10 @@ public class Main {
 
                 case 5:
 
-                    System.out.print(
+                    int deleteNumber = readInteger(
+                            sc,
                             "Enter task number to delete: "
                     );
-
-                    int deleteNumber = sc.nextInt();
 
                     manager.deleteTask(
                             deleteNumber
@@ -131,11 +118,11 @@ public class Main {
 
                 case 6:
 
-                    System.out.print(
-                            "Enter task to search: "
-                    );
-
-                    String keyword = sc.nextLine();
+                    String keyword =
+                            readNonEmptyText(
+                                    sc,
+                                    "Enter task to search: "
+                            );
 
                     manager.searchTask(keyword);
 
@@ -146,17 +133,22 @@ public class Main {
                     System.out.println("\n1. Pending");
                     System.out.println("2. Completed");
 
-                    System.out.print("Choose status: ");
-
-                    int statusChoice = sc.nextInt();
+                    int statusChoice = readInteger(
+                            sc,
+                            "Choose status: "
+                    );
 
                     if (statusChoice == 1) {
 
-                        manager.filterByStatus("Pending");
+                        manager.filterByStatus(
+                                "Pending"
+                        );
 
                     } else if (statusChoice == 2) {
 
-                        manager.filterByStatus("Completed");
+                        manager.filterByStatus(
+                                "Completed"
+                        );
 
                     } else {
 
@@ -173,21 +165,28 @@ public class Main {
                     System.out.println("2. Medium");
                     System.out.println("3. Low");
 
-                    System.out.print("Choose priority: ");
-
-                    int priorityChoice = sc.nextInt();
+                    int priorityChoice = readInteger(
+                            sc,
+                            "Choose priority: "
+                    );
 
                     if (priorityChoice == 1) {
 
-                        manager.filterByPriority("High");
+                        manager.filterByPriority(
+                                "High"
+                        );
 
                     } else if (priorityChoice == 2) {
 
-                        manager.filterByPriority("Medium");
+                        manager.filterByPriority(
+                                "Medium"
+                        );
 
                     } else if (priorityChoice == 3) {
 
-                        manager.filterByPriority("Low");
+                        manager.filterByPriority(
+                                "Low"
+                        );
 
                     } else {
 
@@ -205,13 +204,20 @@ public class Main {
 
                 case 10:
 
-                    System.out.println("\n===== Sort Tasks =====");
-                    System.out.println("1. Sort by Priority");
-                    System.out.println("2. Sort by Due Date");
+                    System.out.println(
+                            "\n===== Sort Tasks ====="
+                    );
+                    System.out.println(
+                            "1. Sort by Priority"
+                    );
+                    System.out.println(
+                            "2. Sort by Due Date"
+                    );
 
-                    System.out.print("Choose option: ");
-
-                    int sortChoice = sc.nextInt();
+                    int sortChoice = readInteger(
+                            sc,
+                            "Choose option: "
+                    );
 
                     if (sortChoice == 1) {
 
@@ -242,9 +248,154 @@ public class Main {
                 default:
 
                     System.out.println(
-                            "Invalid choice!"
+                            "Invalid choice! Enter 1 to 11."
                     );
             }
+        }
+    }
+
+    public static int readInteger(
+            Scanner sc,
+            String message) {
+
+        while (true) {
+
+            System.out.print(message);
+
+            String input = sc.nextLine().trim();
+
+            try {
+
+                return Integer.parseInt(input);
+
+            } catch (NumberFormatException e) {
+
+                System.out.println(
+                        "Please enter a valid number!"
+                );
+            }
+        }
+    }
+
+    public static String readNonEmptyText(
+            Scanner sc,
+            String message) {
+
+        while (true) {
+
+            System.out.print(message);
+
+            String input = sc.nextLine().trim();
+
+            if (!input.isEmpty()) {
+                return input;
+            }
+
+            System.out.println(
+                    "Input cannot be empty!"
+            );
+        }
+    }
+
+    public static String readPriority(
+            Scanner sc) {
+
+        while (true) {
+
+            System.out.print(
+                    "Enter priority (High/Medium/Low): "
+            );
+
+            String priority =
+                    sc.nextLine().trim();
+
+            if (priority.equalsIgnoreCase("High")
+                    || priority.equalsIgnoreCase("Medium")
+                    || priority.equalsIgnoreCase("Low")) {
+
+                if (priority.equalsIgnoreCase("High")) {
+                    return "High";
+                }
+
+                if (priority.equalsIgnoreCase("Medium")) {
+                    return "Medium";
+                }
+
+                return "Low";
+            }
+
+            System.out.println(
+                    "Invalid priority! Please enter High, Medium or Low."
+            );
+        }
+    }
+
+    public static String readValidDate(
+            Scanner sc) {
+
+        while (true) {
+
+            System.out.print(
+                    "Enter due date (DD-MM-YYYY): "
+            );
+
+            String dueDate =
+                    sc.nextLine().trim();
+
+            if (managerDateIsValid(dueDate)) {
+                return dueDate;
+            }
+
+            System.out.println(
+                    "Invalid date! Please use DD-MM-YYYY."
+            );
+        }
+    }
+
+    public static boolean managerDateIsValid(
+            String dueDate) {
+
+        String[] parts =
+                dueDate.split("-");
+
+        if (parts.length != 3) {
+            return false;
+        }
+
+        try {
+
+            int day =
+                    Integer.parseInt(parts[0]);
+
+            int month =
+                    Integer.parseInt(parts[1]);
+
+            int year =
+                    Integer.parseInt(parts[2]);
+
+            if (day < 1 || day > 31) {
+                return false;
+            }
+
+            if (month < 1 || month > 12) {
+                return false;
+            }
+
+            if (year < 2000 || year > 2100) {
+                return false;
+            }
+
+            java.time.LocalDate.parse(
+                    dueDate,
+                    java.time.format.DateTimeFormatter
+                            .ofPattern("dd-MM-yyyy")
+            );
+
+            return true;
+
+        } catch (Exception e) {
+
+            return false;
         }
     }
 }
