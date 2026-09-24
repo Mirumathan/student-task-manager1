@@ -20,7 +20,8 @@ public class Main {
             System.out.println("8. Filter by Priority");
             System.out.println("9. Task Statistics");
             System.out.println("10. Sort Tasks");
-            System.out.println("11. Exit");
+            System.out.println("11. View Overdue Tasks");
+            System.out.println("12. Exit");
 
             int choice = readInteger(
                     sc,
@@ -31,14 +32,17 @@ public class Main {
 
                 case 1:
 
-                    String name = readNonEmptyText(
-                            sc,
-                            "Enter task: "
-                    );
+                    String name =
+                            readNonEmptyText(
+                                    sc,
+                                    "Enter task: "
+                            );
 
-                    String priority = readPriority(sc);
+                    String priority =
+                            readPriority(sc);
 
-                    String dueDate = readValidDate(sc);
+                    String dueDate =
+                            readValidDate(sc);
 
                     manager.addTask(
                             name,
@@ -59,13 +63,15 @@ public class Main {
 
                     if (!manager.tasks.isEmpty()) {
 
-                        int updateNumber = readInteger(
-                                sc,
-                                "Enter task number to update: "
-                        );
+                        int updateNumber =
+                                readInteger(
+                                        sc,
+                                        "Enter task number to update: "
+                                );
 
-                        if (updateNumber >= 1 &&
-                                updateNumber <= manager.tasks.size()) {
+                        if (updateNumber >= 1
+                                && updateNumber
+                                <= manager.tasks.size()) {
 
                             String newName =
                                     readNonEmptyText(
@@ -92,10 +98,11 @@ public class Main {
 
                 case 4:
 
-                    int completeNumber = readInteger(
-                            sc,
-                            "Enter task number to complete: "
-                    );
+                    int completeNumber =
+                            readInteger(
+                                    sc,
+                                    "Enter task number to complete: "
+                            );
 
                     manager.completeTask(
                             completeNumber
@@ -105,10 +112,11 @@ public class Main {
 
                 case 5:
 
-                    int deleteNumber = readInteger(
-                            sc,
-                            "Enter task number to delete: "
-                    );
+                    int deleteNumber =
+                            readInteger(
+                                    sc,
+                                    "Enter task number to delete: "
+                            );
 
                     manager.deleteTask(
                             deleteNumber
@@ -133,10 +141,11 @@ public class Main {
                     System.out.println("\n1. Pending");
                     System.out.println("2. Completed");
 
-                    int statusChoice = readInteger(
-                            sc,
-                            "Choose status: "
-                    );
+                    int statusChoice =
+                            readInteger(
+                                    sc,
+                                    "Choose status: "
+                            );
 
                     if (statusChoice == 1) {
 
@@ -165,10 +174,11 @@ public class Main {
                     System.out.println("2. Medium");
                     System.out.println("3. Low");
 
-                    int priorityChoice = readInteger(
-                            sc,
-                            "Choose priority: "
-                    );
+                    int priorityChoice =
+                            readInteger(
+                                    sc,
+                                    "Choose priority: "
+                            );
 
                     if (priorityChoice == 1) {
 
@@ -214,10 +224,11 @@ public class Main {
                             "2. Sort by Due Date"
                     );
 
-                    int sortChoice = readInteger(
-                            sc,
-                            "Choose option: "
-                    );
+                    int sortChoice =
+                            readInteger(
+                                    sc,
+                                    "Choose option: "
+                            );
 
                     if (sortChoice == 1) {
 
@@ -238,6 +249,11 @@ public class Main {
 
                 case 11:
 
+                    manager.showOverdueTasks();
+                    break;
+
+                case 12:
+
                     System.out.println(
                             "Thank you for using Student Task Manager!"
                     );
@@ -248,7 +264,7 @@ public class Main {
                 default:
 
                     System.out.println(
-                            "Invalid choice! Enter 1 to 11."
+                            "Invalid choice! Enter 1 to 12."
                     );
             }
         }
@@ -262,7 +278,8 @@ public class Main {
 
             System.out.print(message);
 
-            String input = sc.nextLine().trim();
+            String input =
+                    sc.nextLine().trim();
 
             try {
 
@@ -285,7 +302,8 @@ public class Main {
 
             System.out.print(message);
 
-            String input = sc.nextLine().trim();
+            String input =
+                    sc.nextLine().trim();
 
             if (!input.isEmpty()) {
                 return input;
@@ -309,18 +327,15 @@ public class Main {
             String priority =
                     sc.nextLine().trim();
 
-            if (priority.equalsIgnoreCase("High")
-                    || priority.equalsIgnoreCase("Medium")
-                    || priority.equalsIgnoreCase("Low")) {
+            if (priority.equalsIgnoreCase("High")) {
+                return "High";
+            }
 
-                if (priority.equalsIgnoreCase("High")) {
-                    return "High";
-                }
+            if (priority.equalsIgnoreCase("Medium")) {
+                return "Medium";
+            }
 
-                if (priority.equalsIgnoreCase("Medium")) {
-                    return "Medium";
-                }
-
+            if (priority.equalsIgnoreCase("Low")) {
                 return "Low";
             }
 

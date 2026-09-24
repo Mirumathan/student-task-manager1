@@ -33,12 +33,10 @@ public class TaskManager {
     public boolean isValidDate(String dueDate) {
 
         try {
-
             LocalDate.parse(dueDate, dateFormatter);
             return true;
 
         } catch (DateTimeParseException e) {
-
             return false;
         }
     }
@@ -153,7 +151,9 @@ public class TaskManager {
             Task removed = tasks.remove(taskNumber - 1);
             saveTasks();
 
-            System.out.println("Deleted task: " + removed.name);
+            System.out.println(
+                    "Deleted task: " + removed.name
+            );
 
         } else {
             System.out.println("Invalid task number!");
@@ -205,7 +205,8 @@ public class TaskManager {
 
         if (!found) {
             System.out.println(
-                    "No " + status.toLowerCase() + " tasks found."
+                    "No " + status.toLowerCase()
+                    + " tasks found."
             );
         }
     }
@@ -245,6 +246,7 @@ public class TaskManager {
         int total = tasks.size();
         int completed = 0;
         int pending = 0;
+        int overdue = 0;
         int high = 0;
         int medium = 0;
         int low = 0;
@@ -255,6 +257,10 @@ public class TaskManager {
                 completed++;
             } else {
                 pending++;
+
+                if (isOverdue(task)) {
+                    overdue++;
+                }
             }
 
             if (task.priority.equalsIgnoreCase("High")) {
@@ -270,9 +276,54 @@ public class TaskManager {
         System.out.println("Total Tasks     : " + total);
         System.out.println("Completed Tasks : " + completed);
         System.out.println("Pending Tasks   : " + pending);
+        System.out.println("Overdue Tasks   : " + overdue);
         System.out.println("High Priority   : " + high);
         System.out.println("Medium Priority : " + medium);
         System.out.println("Low Priority    : " + low);
+    }
+
+    public void showOverdueTasks() {
+
+        boolean found = false;
+
+        System.out.println("\n===== Overdue Tasks =====");
+
+        for (int i = 0; i < tasks.size(); i++) {
+
+            Task task = tasks.get(i);
+
+            if (isOverdue(task)) {
+
+                displayTask(i, task);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No overdue tasks found.");
+        }
+    }
+
+    private boolean isOverdue(Task task) {
+
+        if (task.completed) {
+            return false;
+        }
+
+        try {
+
+            LocalDate dueDate =
+                    LocalDate.parse(
+                            task.dueDate,
+                            dateFormatter
+                    );
+
+            return dueDate.isBefore(LocalDate.now());
+
+        } catch (DateTimeParseException e) {
+
+            return false;
+        }
     }
 
     public void sortByPriority() {
@@ -297,9 +348,13 @@ public class TaskManager {
 
         if (priority.equalsIgnoreCase("High")) {
             return 1;
-        } else if (priority.equalsIgnoreCase("Medium")) {
+        }
+
+        if (priority.equalsIgnoreCase("Medium")) {
             return 2;
-        } else if (priority.equalsIgnoreCase("Low")) {
+        }
+
+        if (priority.equalsIgnoreCase("Low")) {
             return 3;
         }
 
@@ -347,6 +402,12 @@ public class TaskManager {
 
     private void displayTask(int index, Task task) {
 
+        String status = task.getStatus();
+
+        if (isOverdue(task)) {
+            status = "OVERDUE";
+        }
+
         System.out.println(
                 (index + 1) + ". " +
                 task.name +
@@ -355,7 +416,7 @@ public class TaskManager {
                 " | Due: " +
                 task.dueDate +
                 " | Status: " +
-                task.getStatus()
+                status
         );
     }
 
@@ -404,7 +465,8 @@ public class TaskManager {
 
             while ((line = reader.readLine()) != null) {
 
-                String[] data = line.split("\\|");
+                String[] data =
+                        line.split("\\|");
 
                 if (data.length == 4) {
 
@@ -413,7 +475,9 @@ public class TaskManager {
                     String dueDate = data[2];
 
                     boolean completed =
-                            Boolean.parseBoolean(data[3]);
+                            Boolean.parseBoolean(
+                                    data[3]
+                            );
 
                     if (isValidPriority(priority)
                             && isValidDate(dueDate)
