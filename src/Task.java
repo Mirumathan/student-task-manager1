@@ -23,6 +23,10 @@ public class Task {
         completed = true;
     }
 
+    public void markPending() {
+        completed = false;
+    }
+
     public String getStatus() {
         return completed ? "Completed" : "Pending";
     }
