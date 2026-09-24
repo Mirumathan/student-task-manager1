@@ -30,7 +30,10 @@ public class Main {
                     System.out.print("Enter priority (High/Medium/Low): ");
                     String priority = sc.nextLine();
 
-                    manager.addTask(name, priority);
+                    System.out.print("Enter due date (DD-MM-YYYY): ");
+                    String dueDate = sc.nextLine();
+
+                    manager.addTask(name, priority, dueDate);
                     break;
 
                 case 2:
@@ -62,6 +65,7 @@ public class Main {
                     System.out.println(
                         "Thank you for using Student Task Manager!"
                     );
+
                     sc.close();
                     return;
 

@@ -4,8 +4,8 @@ public class TaskManager {
 
     ArrayList<Task> tasks = new ArrayList<>();
 
-    public void addTask(String name, String priority) {
-        tasks.add(new Task(name, priority));
+    public void addTask(String name, String priority, String dueDate) {
+        tasks.add(new Task(name, priority, dueDate));
         System.out.println("Task added successfully!");
     }
 
@@ -25,6 +25,8 @@ public class TaskManager {
                 task.name +
                 " | Priority: " +
                 task.priority +
+                " | Due: " +
+                task.dueDate +
                 " | Status: " +
                 task.getStatus()
             );
@@ -61,6 +63,8 @@ public class TaskManager {
                     task.name +
                     " | Priority: " +
                     task.priority +
+                    " | Due: " +
+                    task.dueDate +
                     " | Status: " +
                     task.getStatus()
                 );
