@@ -6,14 +6,14 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        ArrayList<String> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>();
 
         while (true) {
 
             System.out.println("\n===== Student Task Manager =====");
             System.out.println("1. Add Task");
             System.out.println("2. View Tasks");
-            System.out.println("3. Update Task");
+            System.out.println("3. Mark Task Completed");
             System.out.println("4. Delete Task");
             System.out.println("5. Exit");
 
@@ -25,8 +25,10 @@ public class Main {
 
                 case 1:
                     System.out.print("Enter task: ");
-                    String task = sc.nextLine();
-                    tasks.add(task);
+                    String taskName = sc.nextLine();
+
+                    tasks.add(new Task(taskName));
+
                     System.out.println("Task added successfully!");
                     break;
 
@@ -34,10 +36,18 @@ public class Main {
                     if (tasks.isEmpty()) {
                         System.out.println("No tasks available.");
                     } else {
+
                         System.out.println("\nYour Tasks:");
 
                         for (int i = 0; i < tasks.size(); i++) {
-                            System.out.println((i + 1) + ". " + tasks.get(i));
+                            Task task = tasks.get(i);
+
+                            System.out.println(
+                                (i + 1) + ". " +
+                                task.name +
+                                " - " +
+                                task.getStatus()
+                            );
                         }
                     }
                     break;
@@ -49,20 +59,25 @@ public class Main {
                     }
 
                     System.out.println("\nYour Tasks:");
+
                     for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println((i + 1) + ". " + tasks.get(i));
+                        System.out.println(
+                            (i + 1) + ". " +
+                            tasks.get(i).name +
+                            " - " +
+                            tasks.get(i).getStatus()
+                        );
                     }
 
-                    System.out.print("Enter task number to update: ");
-                    int updateTask = sc.nextInt();
-                    sc.nextLine();
+                    System.out.print("Enter task number to complete: ");
+                    int taskNumber = sc.nextInt();
 
-                    if (updateTask >= 1 && updateTask <= tasks.size()) {
-                        System.out.print("Enter new task: ");
-                        String newTask = sc.nextLine();
+                    if (taskNumber >= 1 && taskNumber <= tasks.size()) {
 
-                        tasks.set(updateTask - 1, newTask);
-                        System.out.println("Task updated successfully!");
+                        tasks.get(taskNumber - 1).markCompleted();
+
+                        System.out.println("Task marked as completed!");
+
                     } else {
                         System.out.println("Invalid task number!");
                     }
@@ -74,29 +89,32 @@ public class Main {
                         break;
                     }
 
-                    System.out.println("\nYour Tasks:");
-                    for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println((i + 1) + ". " + tasks.get(i));
-                    }
-
                     System.out.print("Enter task number to delete: ");
-                    int deleteTask = sc.nextInt();
+                    int deleteNumber = sc.nextInt();
 
-                    if (deleteTask >= 1 && deleteTask <= tasks.size()) {
-                        String removedTask = tasks.remove(deleteTask - 1);
-                        System.out.println("Deleted task: " + removedTask);
+                    if (deleteNumber >= 1 && deleteNumber <= tasks.size()) {
+
+                        Task removedTask = tasks.remove(deleteNumber - 1);
+
+                        System.out.println(
+                            "Deleted task: " + removedTask.name
+                        );
+
                     } else {
                         System.out.println("Invalid task number!");
                     }
                     break;
 
                 case 5:
-                    System.out.println("Thank you for using Student Task Manager!");
+                    System.out.println(
+                        "Thank you for using Student Task Manager!"
+                    );
+
                     sc.close();
                     return;
 
                 default:
-                    System.out.println("Invalid choice! Please try again.");
+                    System.out.println("Invalid choice!");
             }
         }
     }
