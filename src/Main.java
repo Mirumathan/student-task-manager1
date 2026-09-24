@@ -15,7 +15,9 @@ public class Main {
             System.out.println("3. Mark Task Completed");
             System.out.println("4. Delete Task");
             System.out.println("5. Search Task");
-            System.out.println("6. Exit");
+            System.out.println("6. Filter by Status");
+            System.out.println("7. Filter by Priority");
+            System.out.println("8. Exit");
 
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
@@ -62,10 +64,44 @@ public class Main {
                     break;
 
                 case 6:
+                    System.out.println("\n1. Pending");
+                    System.out.println("2. Completed");
+                    System.out.print("Choose status: ");
+
+                    int statusChoice = sc.nextInt();
+
+                    if (statusChoice == 1) {
+                        manager.filterByStatus("Pending");
+                    } else if (statusChoice == 2) {
+                        manager.filterByStatus("Completed");
+                    } else {
+                        System.out.println("Invalid choice!");
+                    }
+                    break;
+
+                case 7:
+                    System.out.println("\n1. High");
+                    System.out.println("2. Medium");
+                    System.out.println("3. Low");
+                    System.out.print("Choose priority: ");
+
+                    int priorityChoice = sc.nextInt();
+
+                    if (priorityChoice == 1) {
+                        manager.filterByPriority("High");
+                    } else if (priorityChoice == 2) {
+                        manager.filterByPriority("Medium");
+                    } else if (priorityChoice == 3) {
+                        manager.filterByPriority("Low");
+                    } else {
+                        System.out.println("Invalid choice!");
+                    }
+                    break;
+
+                case 8:
                     System.out.println(
                         "Thank you for using Student Task Manager!"
                     );
-
                     sc.close();
                     return;
 
