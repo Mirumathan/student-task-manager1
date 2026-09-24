@@ -180,6 +180,19 @@ public class TaskManager {
         }
     }
 
+    public void clearAllTasks() {
+
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks to clear.");
+            return;
+        }
+
+        tasks.clear();
+        saveTasks();
+
+        System.out.println("All tasks cleared successfully!");
+    }
+
     public void searchTask(String keyword) {
 
         if (keyword.trim().isEmpty()) {
@@ -313,7 +326,6 @@ public class TaskManager {
             Task task = tasks.get(i);
 
             if (isOverdue(task)) {
-
                 displayTask(i, task);
                 found = true;
             }
