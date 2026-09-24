@@ -27,7 +27,10 @@ public class Main {
                     System.out.print("Enter task: ");
                     String taskName = sc.nextLine();
 
-                    tasks.add(new Task(taskName));
+                    System.out.print("Enter priority (High/Medium/Low): ");
+                    String priority = sc.nextLine();
+
+                    tasks.add(new Task(taskName, priority));
 
                     System.out.println("Task added successfully!");
                     break;
@@ -40,12 +43,15 @@ public class Main {
                         System.out.println("\nYour Tasks:");
 
                         for (int i = 0; i < tasks.size(); i++) {
+
                             Task task = tasks.get(i);
 
                             System.out.println(
                                 (i + 1) + ". " +
                                 task.name +
-                                " - " +
+                                " | Priority: " +
+                                task.priority +
+                                " | Status: " +
                                 task.getStatus()
                             );
                         }
@@ -56,17 +62,6 @@ public class Main {
                     if (tasks.isEmpty()) {
                         System.out.println("No tasks available.");
                         break;
-                    }
-
-                    System.out.println("\nYour Tasks:");
-
-                    for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println(
-                            (i + 1) + ". " +
-                            tasks.get(i).name +
-                            " - " +
-                            tasks.get(i).getStatus()
-                        );
                     }
 
                     System.out.print("Enter task number to complete: ");
