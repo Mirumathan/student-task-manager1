@@ -24,6 +24,25 @@ public class Main {
             System.out.println((i + 1) + ". " + tasks.get(i));
         }
 
+        System.out.print("\nEnter task number to delete: ");
+        int deleteTask = sc.nextInt();
+
+        if (deleteTask >= 1 && deleteTask <= tasks.size()) {
+
+            String removedTask = tasks.remove(deleteTask - 1);
+
+            System.out.println("Deleted task: " + removedTask);
+
+        } else {
+            System.out.println("Invalid task number!");
+        }
+
+        System.out.println("\nTasks after deletion:");
+
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + ". " + tasks.get(i));
+        }
+
         sc.close();
     }
 }
