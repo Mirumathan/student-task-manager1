@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -22,14 +23,62 @@ public class TaskManager {
         loadTasks();
     }
 
+    public boolean isValidPriority(String priority) {
+
+        return priority.equalsIgnoreCase("High")
+                || priority.equalsIgnoreCase("Medium")
+                || priority.equalsIgnoreCase("Low");
+    }
+
+    public boolean isValidDate(String dueDate) {
+
+        try {
+
+            LocalDate.parse(dueDate, dateFormatter);
+            return true;
+
+        } catch (DateTimeParseException e) {
+
+            return false;
+        }
+    }
+
     public void addTask(String name, String priority, String dueDate) {
-        tasks.add(new Task(name, priority, dueDate));
+
+        if (name.trim().isEmpty()) {
+            System.out.println("Task name cannot be empty!");
+            return;
+        }
+
+        if (!isValidPriority(priority)) {
+            System.out.println(
+                    "Invalid priority! Use High, Medium or Low."
+            );
+            return;
+        }
+
+        if (!isValidDate(dueDate)) {
+            System.out.println(
+                    "Invalid date! Use DD-MM-YYYY format."
+            );
+            return;
+        }
+
+        tasks.add(
+                new Task(
+                        name.trim(),
+                        normalizePriority(priority),
+                        dueDate
+                )
+        );
+
         saveTasks();
 
         System.out.println("Task added successfully!");
     }
 
     public void viewTasks() {
+
         if (tasks.isEmpty()) {
             System.out.println("No tasks available.");
             return;
@@ -48,24 +97,43 @@ public class TaskManager {
             String newPriority,
             String newDueDate) {
 
-        if (taskNumber >= 1 && taskNumber <= tasks.size()) {
-
-            Task task = tasks.get(taskNumber - 1);
-
-            task.name = newName;
-            task.priority = newPriority;
-            task.dueDate = newDueDate;
-
-            saveTasks();
-
-            System.out.println("Task updated successfully!");
-
-        } else {
+        if (taskNumber < 1 || taskNumber > tasks.size()) {
             System.out.println("Invalid task number!");
+            return;
         }
+
+        if (newName.trim().isEmpty()) {
+            System.out.println("Task name cannot be empty!");
+            return;
+        }
+
+        if (!isValidPriority(newPriority)) {
+            System.out.println(
+                    "Invalid priority! Use High, Medium or Low."
+            );
+            return;
+        }
+
+        if (!isValidDate(newDueDate)) {
+            System.out.println(
+                    "Invalid date! Use DD-MM-YYYY format."
+            );
+            return;
+        }
+
+        Task task = tasks.get(taskNumber - 1);
+
+        task.name = newName.trim();
+        task.priority = normalizePriority(newPriority);
+        task.dueDate = newDueDate;
+
+        saveTasks();
+
+        System.out.println("Task updated successfully!");
     }
 
     public void completeTask(int taskNumber) {
+
         if (taskNumber >= 1 && taskNumber <= tasks.size()) {
 
             tasks.get(taskNumber - 1).markCompleted();
@@ -79,6 +147,7 @@ public class TaskManager {
     }
 
     public void deleteTask(int taskNumber) {
+
         if (taskNumber >= 1 && taskNumber <= tasks.size()) {
 
             Task removed = tasks.remove(taskNumber - 1);
@@ -93,13 +162,20 @@ public class TaskManager {
 
     public void searchTask(String keyword) {
 
+        if (keyword.trim().isEmpty()) {
+            System.out.println("Search keyword cannot be empty!");
+            return;
+        }
+
         boolean found = false;
 
         for (int i = 0; i < tasks.size(); i++) {
 
             Task task = tasks.get(i);
 
-            if (task.name.toLowerCase().contains(keyword.toLowerCase())) {
+            if (task.name.toLowerCase()
+                    .contains(keyword.toLowerCase().trim())) {
+
                 displayTask(i, task);
                 found = true;
             }
@@ -121,6 +197,7 @@ public class TaskManager {
             Task task = tasks.get(i);
 
             if (task.getStatus().equalsIgnoreCase(status)) {
+
                 displayTask(i, task);
                 found = true;
             }
@@ -135,6 +212,11 @@ public class TaskManager {
 
     public void filterByPriority(String priority) {
 
+        if (!isValidPriority(priority)) {
+            System.out.println("Invalid priority!");
+            return;
+        }
+
         boolean found = false;
 
         System.out.println("\n" + priority + " Priority Tasks:");
@@ -144,6 +226,7 @@ public class TaskManager {
             Task task = tasks.get(i);
 
             if (task.priority.equalsIgnoreCase(priority)) {
+
                 displayTask(i, task);
                 found = true;
             }
@@ -151,8 +234,8 @@ public class TaskManager {
 
         if (!found) {
             System.out.println(
-                    "No " + priority.toLowerCase() +
-                    " priority tasks found."
+                    "No " + priority.toLowerCase()
+                    + " priority tasks found."
             );
         }
     }
@@ -244,9 +327,22 @@ public class TaskManager {
         } catch (Exception e) {
 
             System.out.println(
-                    "Unable to sort by due date. Check date format."
+                    "Unable to sort by due date."
             );
         }
+    }
+
+    private String normalizePriority(String priority) {
+
+        if (priority.equalsIgnoreCase("High")) {
+            return "High";
+        }
+
+        if (priority.equalsIgnoreCase("Medium")) {
+            return "Medium";
+        }
+
+        return "Low";
     }
 
     private void displayTask(int index, Task task) {
@@ -266,7 +362,9 @@ public class TaskManager {
     private void saveTasks() {
 
         try (BufferedWriter writer =
-                     new BufferedWriter(new FileWriter(fileName))) {
+                     new BufferedWriter(
+                             new FileWriter(fileName)
+                     )) {
 
             for (Task task : tasks) {
 
@@ -283,7 +381,8 @@ public class TaskManager {
         } catch (IOException e) {
 
             System.out.println(
-                    "Error saving tasks: " + e.getMessage()
+                    "Error saving tasks: " +
+                    e.getMessage()
             );
         }
     }
@@ -297,7 +396,9 @@ public class TaskManager {
         }
 
         try (BufferedReader reader =
-                     new BufferedReader(new FileReader(file))) {
+                     new BufferedReader(
+                             new FileReader(file)
+                     )) {
 
             String line;
 
@@ -310,24 +411,31 @@ public class TaskManager {
                     String name = data[0];
                     String priority = data[1];
                     String dueDate = data[2];
+
                     boolean completed =
                             Boolean.parseBoolean(data[3]);
 
-                    tasks.add(
-                            new Task(
-                                    name,
-                                    priority,
-                                    dueDate,
-                                    completed
-                            )
-                    );
+                    if (isValidPriority(priority)
+                            && isValidDate(dueDate)
+                            && !name.trim().isEmpty()) {
+
+                        tasks.add(
+                                new Task(
+                                        name,
+                                        normalizePriority(priority),
+                                        dueDate,
+                                        completed
+                                )
+                        );
+                    }
                 }
             }
 
         } catch (IOException e) {
 
             System.out.println(
-                    "Error loading tasks: " + e.getMessage()
+                    "Error loading tasks: " +
+                    e.getMessage()
             );
         }
     }
