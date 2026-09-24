@@ -22,12 +22,14 @@ public class Main {
             System.out.println("10. Task Statistics");
             System.out.println("11. Sort Tasks");
             System.out.println("12. View Overdue Tasks");
-            System.out.println("13. Exit");
+            System.out.println("13. Clear All Tasks");
+            System.out.println("14. Exit");
 
-            int choice = readInteger(
-                    sc,
-                    "Enter your choice: "
-            );
+            int choice =
+                    readInteger(
+                            sc,
+                            "Enter your choice: "
+                    );
 
             switch (choice) {
 
@@ -70,9 +72,8 @@ public class Main {
                                         "Enter task number to update: "
                                 );
 
-                        if (updateNumber >= 1
-                                && updateNumber
-                                <= manager.tasks.size()) {
+                        if (updateNumber >= 1 &&
+                                updateNumber <= manager.tasks.size()) {
 
                             String newName =
                                     readNonEmptyText(
@@ -237,9 +238,11 @@ public class Main {
                     System.out.println(
                             "\n===== Sort Tasks ====="
                     );
+
                     System.out.println(
                             "1. Sort by Priority"
                     );
+
                     System.out.println(
                             "2. Sort by Due Date"
                     );
@@ -274,6 +277,33 @@ public class Main {
 
                 case 13:
 
+                    manager.viewTasks();
+
+                    if (!manager.tasks.isEmpty()) {
+
+                        System.out.print(
+                                "Are you sure you want to delete ALL tasks? (Y/N): "
+                        );
+
+                        String confirm =
+                                sc.nextLine();
+
+                        if (confirm.equalsIgnoreCase("Y")) {
+
+                            manager.clearAllTasks();
+
+                        } else {
+
+                            System.out.println(
+                                    "Clear operation cancelled."
+                            );
+                        }
+                    }
+
+                    break;
+
+                case 14:
+
                     System.out.println(
                             "Thank you for using Student Task Manager!"
                     );
@@ -284,7 +314,7 @@ public class Main {
                 default:
 
                     System.out.println(
-                            "Invalid choice! Enter 1 to 13."
+                            "Invalid choice! Enter 1 to 14."
                     );
             }
         }
