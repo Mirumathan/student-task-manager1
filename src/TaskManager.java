@@ -35,7 +35,6 @@ public class TaskManager {
         try {
             LocalDate.parse(dueDate, dateFormatter);
             return true;
-
         } catch (DateTimeParseException e) {
             return false;
         }
@@ -138,6 +137,27 @@ public class TaskManager {
             saveTasks();
 
             System.out.println("Task marked as completed!");
+
+        } else {
+            System.out.println("Invalid task number!");
+        }
+    }
+
+    public void reopenTask(int taskNumber) {
+
+        if (taskNumber >= 1 && taskNumber <= tasks.size()) {
+
+            Task task = tasks.get(taskNumber - 1);
+
+            if (!task.completed) {
+                System.out.println("Task is already pending!");
+                return;
+            }
+
+            task.markPending();
+            saveTasks();
+
+            System.out.println("Task reopened successfully!");
 
         } else {
             System.out.println("Invalid task number!");
@@ -475,9 +495,7 @@ public class TaskManager {
                     String dueDate = data[2];
 
                     boolean completed =
-                            Boolean.parseBoolean(
-                                    data[3]
-                            );
+                            Boolean.parseBoolean(data[3]);
 
                     if (isValidPriority(priority)
                             && isValidDate(dueDate)

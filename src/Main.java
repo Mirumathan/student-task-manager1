@@ -14,14 +14,15 @@ public class Main {
             System.out.println("2. View Tasks");
             System.out.println("3. Update Task");
             System.out.println("4. Mark Task Completed");
-            System.out.println("5. Delete Task");
-            System.out.println("6. Search Task");
-            System.out.println("7. Filter by Status");
-            System.out.println("8. Filter by Priority");
-            System.out.println("9. Task Statistics");
-            System.out.println("10. Sort Tasks");
-            System.out.println("11. View Overdue Tasks");
-            System.out.println("12. Exit");
+            System.out.println("5. Reopen Task");
+            System.out.println("6. Delete Task");
+            System.out.println("7. Search Task");
+            System.out.println("8. Filter by Status");
+            System.out.println("9. Filter by Priority");
+            System.out.println("10. Task Statistics");
+            System.out.println("11. Sort Tasks");
+            System.out.println("12. View Overdue Tasks");
+            System.out.println("13. Exit");
 
             int choice = readInteger(
                     sc,
@@ -112,6 +113,25 @@ public class Main {
 
                 case 5:
 
+                    manager.viewTasks();
+
+                    if (!manager.tasks.isEmpty()) {
+
+                        int reopenNumber =
+                                readInteger(
+                                        sc,
+                                        "Enter task number to reopen: "
+                                );
+
+                        manager.reopenTask(
+                                reopenNumber
+                        );
+                    }
+
+                    break;
+
+                case 6:
+
                     int deleteNumber =
                             readInteger(
                                     sc,
@@ -124,7 +144,7 @@ public class Main {
 
                     break;
 
-                case 6:
+                case 7:
 
                     String keyword =
                             readNonEmptyText(
@@ -136,7 +156,7 @@ public class Main {
 
                     break;
 
-                case 7:
+                case 8:
 
                     System.out.println("\n1. Pending");
                     System.out.println("2. Completed");
@@ -168,7 +188,7 @@ public class Main {
 
                     break;
 
-                case 8:
+                case 9:
 
                     System.out.println("\n1. High");
                     System.out.println("2. Medium");
@@ -207,12 +227,12 @@ public class Main {
 
                     break;
 
-                case 9:
+                case 10:
 
                     manager.showStatistics();
                     break;
 
-                case 10:
+                case 11:
 
                     System.out.println(
                             "\n===== Sort Tasks ====="
@@ -247,12 +267,12 @@ public class Main {
 
                     break;
 
-                case 11:
+                case 12:
 
                     manager.showOverdueTasks();
                     break;
 
-                case 12:
+                case 13:
 
                     System.out.println(
                             "Thank you for using Student Task Manager!"
@@ -264,7 +284,7 @@ public class Main {
                 default:
 
                     System.out.println(
-                            "Invalid choice! Enter 1 to 12."
+                            "Invalid choice! Enter 1 to 13."
                     );
             }
         }
