@@ -1,15 +1,31 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TaskManager {
 
     ArrayList<Task> tasks = new ArrayList<>();
 
+    private final String fileName = "tasks.txt";
+
+    public TaskManager() {
+        loadTasks();
+    }
+
     public void addTask(String name, String priority, String dueDate) {
+
         tasks.add(new Task(name, priority, dueDate));
+        saveTasks();
+
         System.out.println("Task added successfully!");
     }
 
     public void viewTasks() {
+
         if (tasks.isEmpty()) {
             System.out.println("No tasks available.");
             return;
@@ -23,30 +39,43 @@ public class TaskManager {
     }
 
     public void completeTask(int taskNumber) {
+
         if (taskNumber >= 1 && taskNumber <= tasks.size()) {
+
             tasks.get(taskNumber - 1).markCompleted();
+            saveTasks();
+
             System.out.println("Task marked as completed!");
+
         } else {
             System.out.println("Invalid task number!");
         }
     }
 
     public void deleteTask(int taskNumber) {
+
         if (taskNumber >= 1 && taskNumber <= tasks.size()) {
+
             Task removed = tasks.remove(taskNumber - 1);
+            saveTasks();
+
             System.out.println("Deleted task: " + removed.name);
+
         } else {
             System.out.println("Invalid task number!");
         }
     }
 
     public void searchTask(String keyword) {
+
         boolean found = false;
 
         for (int i = 0; i < tasks.size(); i++) {
+
             Task task = tasks.get(i);
 
             if (task.name.toLowerCase().contains(keyword.toLowerCase())) {
+
                 displayTask(i, task);
                 found = true;
             }
@@ -58,33 +87,41 @@ public class TaskManager {
     }
 
     public void filterByStatus(String status) {
+
         boolean found = false;
 
         System.out.println("\n" + status + " Tasks:");
 
         for (int i = 0; i < tasks.size(); i++) {
+
             Task task = tasks.get(i);
 
             if (task.getStatus().equalsIgnoreCase(status)) {
+
                 displayTask(i, task);
                 found = true;
             }
         }
 
         if (!found) {
-            System.out.println("No " + status.toLowerCase() + " tasks found.");
+            System.out.println(
+                "No " + status.toLowerCase() + " tasks found."
+            );
         }
     }
 
     public void filterByPriority(String priority) {
+
         boolean found = false;
 
         System.out.println("\n" + priority + " Priority Tasks:");
 
         for (int i = 0; i < tasks.size(); i++) {
+
             Task task = tasks.get(i);
 
             if (task.priority.equalsIgnoreCase(priority)) {
+
                 displayTask(i, task);
                 found = true;
             }
@@ -133,6 +170,7 @@ public class TaskManager {
     }
 
     private void displayTask(int index, Task task) {
+
         System.out.println(
             (index + 1) + ". " +
             task.name +
@@ -143,5 +181,69 @@ public class TaskManager {
             " | Status: " +
             task.getStatus()
         );
+    }
+
+    private void saveTasks() {
+
+        try (BufferedWriter writer =
+                 new BufferedWriter(new FileWriter(fileName))) {
+
+            for (Task task : tasks) {
+
+                writer.write(
+                    task.name + "|" +
+                    task.priority + "|" +
+                    task.dueDate + "|" +
+                    task.completed
+                );
+
+                writer.newLine();
+            }
+
+        } catch (IOException e) {
+
+            System.out.println("Error saving tasks: " + e.getMessage());
+        }
+    }
+
+    private void loadTasks() {
+
+        File file = new File(fileName);
+
+        if (!file.exists()) {
+            return;
+        }
+
+        try (BufferedReader reader =
+                 new BufferedReader(new FileReader(file))) {
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+
+                String[] data = line.split("\\|");
+
+                if (data.length == 4) {
+
+                    String name = data[0];
+                    String priority = data[1];
+                    String dueDate = data[2];
+                    boolean completed = Boolean.parseBoolean(data[3]);
+
+                    tasks.add(
+                        new Task(
+                            name,
+                            priority,
+                            dueDate,
+                            completed
+                        )
+                    );
+                }
+            }
+
+        } catch (IOException e) {
+
+            System.out.println("Error loading tasks: " + e.getMessage());
+        }
     }
 }
