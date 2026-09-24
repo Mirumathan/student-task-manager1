@@ -18,7 +18,8 @@ public class Main {
             System.out.println("6. Filter by Status");
             System.out.println("7. Filter by Priority");
             System.out.println("8. Task Statistics");
-            System.out.println("9. Exit");
+            System.out.println("9. Sort Tasks");
+            System.out.println("10. Exit");
 
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
@@ -32,19 +33,19 @@ public class Main {
                     String name = sc.nextLine();
 
                     System.out.print(
-                        "Enter priority (High/Medium/Low): "
+                            "Enter priority (High/Medium/Low): "
                     );
                     String priority = sc.nextLine();
 
                     System.out.print(
-                        "Enter due date (DD-MM-YYYY): "
+                            "Enter due date (DD-MM-YYYY): "
                     );
                     String dueDate = sc.nextLine();
 
                     manager.addTask(
-                        name,
-                        priority,
-                        dueDate
+                            name,
+                            priority,
+                            dueDate
                     );
 
                     break;
@@ -57,13 +58,13 @@ public class Main {
                 case 3:
 
                     System.out.print(
-                        "Enter task number to complete: "
+                            "Enter task number to complete: "
                     );
 
                     int completeNumber = sc.nextInt();
 
                     manager.completeTask(
-                        completeNumber
+                            completeNumber
                     );
 
                     break;
@@ -71,13 +72,13 @@ public class Main {
                 case 4:
 
                     System.out.print(
-                        "Enter task number to delete: "
+                            "Enter task number to delete: "
                     );
 
                     int deleteNumber = sc.nextInt();
 
                     manager.deleteTask(
-                        deleteNumber
+                            deleteNumber
                     );
 
                     break;
@@ -85,7 +86,7 @@ public class Main {
                 case 5:
 
                     System.out.print(
-                        "Enter task to search: "
+                            "Enter task to search: "
                     );
 
                     String keyword = sc.nextLine();
@@ -100,7 +101,7 @@ public class Main {
                     System.out.println("2. Completed");
 
                     System.out.print(
-                        "Choose status: "
+                            "Choose status: "
                     );
 
                     int statusChoice = sc.nextInt();
@@ -116,7 +117,7 @@ public class Main {
                     } else {
 
                         System.out.println(
-                            "Invalid choice!"
+                                "Invalid choice!"
                         );
                     }
 
@@ -129,7 +130,7 @@ public class Main {
                     System.out.println("3. Low");
 
                     System.out.print(
-                        "Choose priority: "
+                            "Choose priority: "
                     );
 
                     int priorityChoice = sc.nextInt();
@@ -149,7 +150,7 @@ public class Main {
                     } else {
 
                         System.out.println(
-                            "Invalid choice!"
+                                "Invalid choice!"
                         );
                     }
 
@@ -162,8 +163,34 @@ public class Main {
 
                 case 9:
 
+                    System.out.println("\n===== Sort Tasks =====");
+                    System.out.println("1. Sort by Priority");
+                    System.out.println("2. Sort by Due Date");
+
+                    System.out.print("Choose option: ");
+                    int sortChoice = sc.nextInt();
+
+                    if (sortChoice == 1) {
+
+                        manager.sortByPriority();
+
+                    } else if (sortChoice == 2) {
+
+                        manager.sortByDueDate();
+
+                    } else {
+
+                        System.out.println(
+                                "Invalid choice!"
+                        );
+                    }
+
+                    break;
+
+                case 10:
+
                     System.out.println(
-                        "Thank you for using Student Task Manager!"
+                            "Thank you for using Student Task Manager!"
                     );
 
                     sc.close();
@@ -172,7 +199,7 @@ public class Main {
                 default:
 
                     System.out.println(
-                        "Invalid choice!"
+                            "Invalid choice!"
                     );
             }
         }
