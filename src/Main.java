@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -6,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
+        TaskManager manager = new TaskManager();
 
         while (true) {
 
@@ -26,120 +25,43 @@ public class Main {
 
                 case 1:
                     System.out.print("Enter task: ");
-                    String taskName = sc.nextLine();
+                    String name = sc.nextLine();
 
                     System.out.print("Enter priority (High/Medium/Low): ");
                     String priority = sc.nextLine();
 
-                    tasks.add(new Task(taskName, priority));
-
-                    System.out.println("Task added successfully!");
+                    manager.addTask(name, priority);
                     break;
 
                 case 2:
-                    if (tasks.isEmpty()) {
-                        System.out.println("No tasks available.");
-                    } else {
-                        System.out.println("\nYour Tasks:");
-
-                        for (int i = 0; i < tasks.size(); i++) {
-
-                            Task task = tasks.get(i);
-
-                            System.out.println(
-                                (i + 1) + ". " +
-                                task.name +
-                                " | Priority: " +
-                                task.priority +
-                                " | Status: " +
-                                task.getStatus()
-                            );
-                        }
-                    }
+                    manager.viewTasks();
                     break;
 
                 case 3:
-                    if (tasks.isEmpty()) {
-                        System.out.println("No tasks available.");
-                        break;
-                    }
-
                     System.out.print("Enter task number to complete: ");
-                    int taskNumber = sc.nextInt();
+                    int completeNumber = sc.nextInt();
 
-                    if (taskNumber >= 1 && taskNumber <= tasks.size()) {
-                        tasks.get(taskNumber - 1).markCompleted();
-                        System.out.println("Task marked as completed!");
-                    } else {
-                        System.out.println("Invalid task number!");
-                    }
+                    manager.completeTask(completeNumber);
                     break;
 
                 case 4:
-                    if (tasks.isEmpty()) {
-                        System.out.println("No tasks available.");
-                        break;
-                    }
-
                     System.out.print("Enter task number to delete: ");
                     int deleteNumber = sc.nextInt();
 
-                    if (deleteNumber >= 1 && deleteNumber <= tasks.size()) {
-
-                        Task removedTask = tasks.remove(deleteNumber - 1);
-
-                        System.out.println(
-                            "Deleted task: " + removedTask.name
-                        );
-
-                    } else {
-                        System.out.println("Invalid task number!");
-                    }
+                    manager.deleteTask(deleteNumber);
                     break;
 
                 case 5:
-                    if (tasks.isEmpty()) {
-                        System.out.println("No tasks available.");
-                        break;
-                    }
-
                     System.out.print("Enter task to search: ");
-                    String search = sc.nextLine().toLowerCase();
+                    String keyword = sc.nextLine();
 
-                    boolean found = false;
-
-                    System.out.println("\nSearch Results:");
-
-                    for (int i = 0; i < tasks.size(); i++) {
-
-                        Task task = tasks.get(i);
-
-                        if (task.name.toLowerCase().contains(search)) {
-
-                            System.out.println(
-                                (i + 1) + ". " +
-                                task.name +
-                                " | Priority: " +
-                                task.priority +
-                                " | Status: " +
-                                task.getStatus()
-                            );
-
-                            found = true;
-                        }
-                    }
-
-                    if (!found) {
-                        System.out.println("No matching task found.");
-                    }
-
+                    manager.searchTask(keyword);
                     break;
 
                 case 6:
                     System.out.println(
                         "Thank you for using Student Task Manager!"
                     );
-
                     sc.close();
                     return;
 
