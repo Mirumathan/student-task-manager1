@@ -12,32 +12,40 @@ public class Main {
         int n = sc.nextInt();
         sc.nextLine();
 
+        // Add tasks
         for (int i = 0; i < n; i++) {
             System.out.print("Enter task " + (i + 1) + ": ");
             String task = sc.nextLine();
             tasks.add(task);
         }
 
+        // Display tasks
         System.out.println("\nYour Tasks:");
 
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + ". " + tasks.get(i));
         }
 
-        System.out.print("\nEnter task number to delete: ");
-        int deleteTask = sc.nextInt();
+        // Update task
+        System.out.print("\nEnter task number to update: ");
+        int updateTask = sc.nextInt();
+        sc.nextLine();
 
-        if (deleteTask >= 1 && deleteTask <= tasks.size()) {
+        if (updateTask >= 1 && updateTask <= tasks.size()) {
 
-            String removedTask = tasks.remove(deleteTask - 1);
+            System.out.print("Enter new task: ");
+            String newTask = sc.nextLine();
 
-            System.out.println("Deleted task: " + removedTask);
+            tasks.set(updateTask - 1, newTask);
+
+            System.out.println("Task updated successfully!");
 
         } else {
             System.out.println("Invalid task number!");
         }
 
-        System.out.println("\nTasks after deletion:");
+        // Display updated tasks
+        System.out.println("\nUpdated Tasks:");
 
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + ". " + tasks.get(i));
