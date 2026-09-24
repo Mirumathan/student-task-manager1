@@ -15,7 +15,8 @@ public class Main {
             System.out.println("2. View Tasks");
             System.out.println("3. Mark Task Completed");
             System.out.println("4. Delete Task");
-            System.out.println("5. Exit");
+            System.out.println("5. Search Task");
+            System.out.println("6. Exit");
 
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
@@ -27,7 +28,10 @@ public class Main {
                     System.out.print("Enter task: ");
                     String taskName = sc.nextLine();
 
-                    tasks.add(new Task(taskName));
+                    System.out.print("Enter priority (High/Medium/Low): ");
+                    String priority = sc.nextLine();
+
+                    tasks.add(new Task(taskName, priority));
 
                     System.out.println("Task added successfully!");
                     break;
@@ -36,16 +40,18 @@ public class Main {
                     if (tasks.isEmpty()) {
                         System.out.println("No tasks available.");
                     } else {
-
                         System.out.println("\nYour Tasks:");
 
                         for (int i = 0; i < tasks.size(); i++) {
+
                             Task task = tasks.get(i);
 
                             System.out.println(
                                 (i + 1) + ". " +
                                 task.name +
-                                " - " +
+                                " | Priority: " +
+                                task.priority +
+                                " | Status: " +
                                 task.getStatus()
                             );
                         }
@@ -58,26 +64,12 @@ public class Main {
                         break;
                     }
 
-                    System.out.println("\nYour Tasks:");
-
-                    for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println(
-                            (i + 1) + ". " +
-                            tasks.get(i).name +
-                            " - " +
-                            tasks.get(i).getStatus()
-                        );
-                    }
-
                     System.out.print("Enter task number to complete: ");
                     int taskNumber = sc.nextInt();
 
                     if (taskNumber >= 1 && taskNumber <= tasks.size()) {
-
                         tasks.get(taskNumber - 1).markCompleted();
-
                         System.out.println("Task marked as completed!");
-
                     } else {
                         System.out.println("Invalid task number!");
                     }
@@ -106,6 +98,44 @@ public class Main {
                     break;
 
                 case 5:
+                    if (tasks.isEmpty()) {
+                        System.out.println("No tasks available.");
+                        break;
+                    }
+
+                    System.out.print("Enter task to search: ");
+                    String search = sc.nextLine().toLowerCase();
+
+                    boolean found = false;
+
+                    System.out.println("\nSearch Results:");
+
+                    for (int i = 0; i < tasks.size(); i++) {
+
+                        Task task = tasks.get(i);
+
+                        if (task.name.toLowerCase().contains(search)) {
+
+                            System.out.println(
+                                (i + 1) + ". " +
+                                task.name +
+                                " | Priority: " +
+                                task.priority +
+                                " | Status: " +
+                                task.getStatus()
+                            );
+
+                            found = true;
+                        }
+                    }
+
+                    if (!found) {
+                        System.out.println("No matching task found.");
+                    }
+
+                    break;
+
+                case 6:
                     System.out.println(
                         "Thank you for using Student Task Manager!"
                     );

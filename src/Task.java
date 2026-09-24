@@ -2,9 +2,11 @@ public class Task {
 
     String name;
     boolean completed;
+    String priority;
 
-    public Task(String name) {
+    public Task(String name, String priority) {
         this.name = name;
+        this.priority = priority;
         this.completed = false;
     }
 
