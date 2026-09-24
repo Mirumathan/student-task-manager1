@@ -27,6 +27,7 @@ public class Main {
             switch (choice) {
 
                 case 1:
+
                     System.out.print("Enter task: ");
                     String name = sc.nextLine();
 
@@ -40,86 +41,139 @@ public class Main {
                     );
                     String dueDate = sc.nextLine();
 
-                    manager.addTask(name, priority, dueDate);
+                    manager.addTask(
+                        name,
+                        priority,
+                        dueDate
+                    );
+
                     break;
 
                 case 2:
+
                     manager.viewTasks();
                     break;
 
                 case 3:
+
                     System.out.print(
                         "Enter task number to complete: "
                     );
+
                     int completeNumber = sc.nextInt();
 
-                    manager.completeTask(completeNumber);
+                    manager.completeTask(
+                        completeNumber
+                    );
+
                     break;
 
                 case 4:
+
                     System.out.print(
                         "Enter task number to delete: "
                     );
+
                     int deleteNumber = sc.nextInt();
 
-                    manager.deleteTask(deleteNumber);
+                    manager.deleteTask(
+                        deleteNumber
+                    );
+
                     break;
 
                 case 5:
-                    System.out.print("Enter task to search: ");
+
+                    System.out.print(
+                        "Enter task to search: "
+                    );
+
                     String keyword = sc.nextLine();
 
                     manager.searchTask(keyword);
+
                     break;
 
                 case 6:
+
                     System.out.println("\n1. Pending");
                     System.out.println("2. Completed");
-                    System.out.print("Choose status: ");
+
+                    System.out.print(
+                        "Choose status: "
+                    );
 
                     int statusChoice = sc.nextInt();
 
                     if (statusChoice == 1) {
+
                         manager.filterByStatus("Pending");
+
                     } else if (statusChoice == 2) {
+
                         manager.filterByStatus("Completed");
+
                     } else {
-                        System.out.println("Invalid choice!");
+
+                        System.out.println(
+                            "Invalid choice!"
+                        );
                     }
+
                     break;
 
                 case 7:
+
                     System.out.println("\n1. High");
                     System.out.println("2. Medium");
                     System.out.println("3. Low");
-                    System.out.print("Choose priority: ");
+
+                    System.out.print(
+                        "Choose priority: "
+                    );
 
                     int priorityChoice = sc.nextInt();
 
                     if (priorityChoice == 1) {
+
                         manager.filterByPriority("High");
+
                     } else if (priorityChoice == 2) {
+
                         manager.filterByPriority("Medium");
+
                     } else if (priorityChoice == 3) {
+
                         manager.filterByPriority("Low");
+
                     } else {
-                        System.out.println("Invalid choice!");
+
+                        System.out.println(
+                            "Invalid choice!"
+                        );
                     }
+
                     break;
 
                 case 8:
+
                     manager.showStatistics();
                     break;
 
                 case 9:
+
                     System.out.println(
                         "Thank you for using Student Task Manager!"
                     );
+
                     sc.close();
                     return;
 
                 default:
-                    System.out.println("Invalid choice!");
+
+                    System.out.println(
+                        "Invalid choice!"
+                    );
             }
         }
     }
