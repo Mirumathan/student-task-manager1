@@ -91,8 +91,45 @@ public class TaskManager {
         }
 
         if (!found) {
-            System.out.println("No " + priority.toLowerCase() + " priority tasks found.");
+            System.out.println(
+                "No " + priority.toLowerCase() + " priority tasks found."
+            );
         }
+    }
+
+    public void showStatistics() {
+
+        int total = tasks.size();
+        int completed = 0;
+        int pending = 0;
+        int high = 0;
+        int medium = 0;
+        int low = 0;
+
+        for (Task task : tasks) {
+
+            if (task.completed) {
+                completed++;
+            } else {
+                pending++;
+            }
+
+            if (task.priority.equalsIgnoreCase("High")) {
+                high++;
+            } else if (task.priority.equalsIgnoreCase("Medium")) {
+                medium++;
+            } else if (task.priority.equalsIgnoreCase("Low")) {
+                low++;
+            }
+        }
+
+        System.out.println("\n===== Task Statistics =====");
+        System.out.println("Total Tasks     : " + total);
+        System.out.println("Completed Tasks : " + completed);
+        System.out.println("Pending Tasks   : " + pending);
+        System.out.println("High Priority   : " + high);
+        System.out.println("Medium Priority : " + medium);
+        System.out.println("Low Priority    : " + low);
     }
 
     private void displayTask(int index, Task task) {
